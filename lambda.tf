@@ -20,3 +20,11 @@ module "lambda" {
     }
   }
 }
+
+resource "aws_lambda_permission" "cloudwatch_event_rule" {
+  statement_id  = "aws-health-notification-event-rule"
+  action        = "lambda:InvokeFunction"
+  function_name = module.lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.health.arn
+}
