@@ -23,6 +23,9 @@ def lambda_handler(event, context):
     description=event['detail']['eventDescription'][0]['latestDescription'],
     start_time=event['detail']['startTime'],
     end_time=event['detail']['endTime'],
+    affected_resources=", ".join(event['resources']),
+    event_type=event['detail']['eventTypeCategory'],
+    service=event['detail']['service'],
     webhook=SLACK_WEBHOOK
   )
 
@@ -35,7 +38,7 @@ def to_timestamp(date_string):
   )
   return timestamp
 
-def notify_slack(customer, account, account_number, region, title, description, start_time, end_time, webhook):
+def notify_slack(customer, account, account_number, region, title, description, start_time, end_time, affected_resources, event_type, service, webhook):
   print("Notify via Slack")
   message = {
     'attachments': [{
@@ -70,6 +73,16 @@ def notify_slack(customer, account, account_number, region, title, description, 
           'short': True,
         },
         {
+          'title': 'Affected Service',
+          'value': service,
+          'short': True,
+        },
+        {
+          'title': 'Event Type',
+          'value': event_type,
+          'short': True,
+        },
+        {
           'title': 'Start Date/Time',
           'value': start_time,
           'short': True,
@@ -78,6 +91,11 @@ def notify_slack(customer, account, account_number, region, title, description, 
           'title': 'End Date/Time',
           'value': end_time,
           'short': True,
+        },
+        {
+          'title': 'Affected Resources',
+          'value': affected_resources,
+          'short': False,
         },
       ]
     }]
