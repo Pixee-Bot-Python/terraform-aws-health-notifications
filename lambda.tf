@@ -4,7 +4,7 @@ module "lambda" {
   function_name = "aws-health-notification-handler"
   description   = "Handles AWS Health notifications"
   handler       = "main.lambda_handler"
-  runtime       = "python3.6"
+  runtime       = "python3.9"
   timeout       = 300
 
   // Specify a file or directory for the source code.
