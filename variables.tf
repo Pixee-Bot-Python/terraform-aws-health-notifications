@@ -12,3 +12,8 @@ variable "slack_webhook" {
   type = string
   description = "A Slack Webhook URL to send notifications to"
 }
+
+variable "lambda_runtime" {
+  type    = string
+  default = "python3.11"
+}
