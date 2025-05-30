@@ -101,6 +101,6 @@ def notify_slack(customer, account, account_number, region, title, description, 
     }]
   }
 
-  response = requests.post(webhook, json=message)
+  response = requests.post(webhook, json=message, timeout=60)
   if response.status_code != 200:
     raise ValueError("Slack wouldn't speak to me, I got this back" % response.text)
